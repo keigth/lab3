@@ -316,3 +316,18 @@ void searchByTitleInteractive(Library& library) {
         }
     }
 }
+void searchByYearInteractive(Library& library) {
+    int year;
+    cout << "Введите год для поиска: ";
+    cin >> year;
+
+    auto results = library.findBooksByYear(year);
+    if (results.empty()) {
+        cout << "Книги " << year << " года не найдены!" << endl;
+    } else {
+        cout << "Найдено " << results.size() << " книг:" << endl;
+        for (auto book : results) {
+            book->displayInfo();
+        }
+    }
+}

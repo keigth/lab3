@@ -299,3 +299,20 @@ void searchByAuthorInteractive(Library& library) {
         }
     }
 }
+
+void searchByTitleInteractive(Library& library) {
+    string title;
+    cout << "Введите название для поиска: ";
+    cin.ignore();
+    getline(cin, title);
+
+    auto results = library.findBooksByTitle(title);
+    if (results.empty()) {
+        cout << "Книги с названием '" << title << "' не найдены!" << endl;
+    } else {
+        cout << "Найдено " << results.size() << " книг:" << endl;
+        for (auto book : results) {
+            book->displayInfo();
+        }
+    }
+}

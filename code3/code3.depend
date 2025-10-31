@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1761293489 source:d:\tmp\lab3\code3\main.cpp
+	<iostream>
+	<vector>
+	<string>
+	<algorithm>
+	<limits>
+

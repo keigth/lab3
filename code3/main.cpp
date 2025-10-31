@@ -98,3 +98,141 @@ public:
         return "Учебник";
     }
 };
+// Класс библиотеки
+class Library {
+private:
+    vector<Book*> books;
+
+public:
+    ~Library() {
+        for (auto book : books) {
+            delete book;
+        }
+    }
+
+    void addBook(Book* book) {
+        books.push_back(book);
+        cout << "Книга добавлена в библиотеку!" << endl;
+    }
+
+    void removeBook(string isbn) {
+        for (auto it = books.begin(); it != books.end(); ++it) {
+            if ((*it)->getIsbn() == isbn) {
+                delete *it;
+                books.erase(it);
+                cout << "Книга удалена из библиотеки!" << endl;
+                return;
+            }
+        }
+        cout << "Книга с ISBN " << isbn << " не найдена!" << endl;
+    }
+
+    vector<Book*> findBooksByAuthor(string author) const {
+        vector<Book*> result;
+        for (auto book : books) {
+            if (book->getAuthor() == author) {
+                result.push_back(book);
+            }
+        }
+        return result;
+    }
+
+    vector<Book*> findBooksByTitle(string title) const {
+        vector<Book*> result;
+        for (auto book : books) {
+            if (book->getTitle() == title) {
+                result.push_back(book);
+            }
+        }
+        return result;
+    }
+
+    vector<Book*> findBooksByYear(int year) const {
+        vector<Book*> result;
+        for (auto book : books) {
+            if (book->getYear() == year) {
+                result.push_back(book);
+            }
+        }
+        return result;
+    }
+
+    void borrowBook(string isbn) {
+        for (auto book : books) {
+            if (book->getIsbn() == isbn) {
+                if (book->getAvailability()) {
+                    book->setAvailability(false);
+                    cout << "Книга выдана!" << endl;
+                } else {
+                    cout << "Книга уже выдана!" << endl;
+                }
+                return;
+            }
+        }
+        cout << "Книга не найдена!" << endl;
+    }
+
+    void returnBook(string isbn) {
+        for (auto book : books) {
+            if (book->getIsbn() == isbn) {
+                if (!book->getAvailability()) {
+                    book->setAvailability(true);
+                    cout << "Книга возвращена!" << endl;
+                } else {
+                    cout << "Книга уже в библиотеке!" << endl;
+                }
+                return;
+            }
+        }
+        cout << "Книга не найдена!" << endl;
+    }
+
+    void displayAllBooks() const {
+        if (books.empty()) {
+            cout << "Библиотека пуста!" << endl;
+            return;
+        }
+
+        cout << "\n=== ВСЕ КНИГИ В БИБЛИОТЕКЕ ===" << endl;
+        for (auto book : books) {
+            book->displayInfo();
+        }
+    }
+
+    void displayAvailableBooks() const {
+        cout << "\n=== ДОСТУПНЫЕ КНИГИ ===" << endl;
+        bool found = false;
+        for (auto book : books) {
+            if (book->getAvailability()) {
+                book->displayInfo();
+                found = true;
+            }
+        }
+        if (!found) {
+            cout << "Нет доступных книг!" << endl;
+        }
+    }
+
+    void displayStatistics() const {
+        cout << "\n=== СТАТИСТИКА БИБЛИОТЕКИ ===" << endl;
+        cout << "Всего книг: " << books.size() << endl;
+
+        int availableCount = 0;
+        int fictionCount = 0, scienceCount = 0, textbookCount = 0;
+
+        for (auto book : books) {
+            if (book->getAvailability()) availableCount++;
+
+            string type = book->getType();
+            if (type == "Художественная литература") fictionCount++;
+            else if (type == "Научная литература") scienceCount++;
+            else if (type == "Учебник") textbookCount++;
+        }
+
+        cout << "Доступно: " << availableCount << endl;
+        cout << "Выдано: " << (books.size() - availableCount) << endl;
+        cout << "Художественных: " << fictionCount << endl;
+        cout << "Научных: " << scienceCount << endl;
+        cout << "Учебников: " << textbookCount << endl;
+    }
+};

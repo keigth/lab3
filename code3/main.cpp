@@ -344,3 +344,46 @@ void returnBookInteractive(Library& library) {
     cin >> isbn;
     library.returnBook(isbn);
 }
+void removeBookInteractive(Library& library) {
+    string isbn;
+    cout << "Введите ISBN книги для удаления: ";
+    cin >> isbn;
+    library.removeBook(isbn);
+}
+int main() {
+    system("chcp 1251");system("cls");
+
+    Library library;
+
+    // Добавляем несколько книг для примера
+    library.addBook(new FictionBook("1984", "Джордж Оруэлл", 1949, "12345", "Антиутопия"));
+    library.addBook(new ScienceBook("Краткая история времени", "Стивен Хокинг", 1988, "12347", "Физика"));
+    library.addBook(new Textbook("Алгебра", "Иванов А.А.", 2020, "12349", "10 класс"));
+
+    cout << "ДОБРО ПОЖАЛОВАТЬ В УМНУЮ ДОМАШНЮЮ БИБЛИОТЕКУ!" << endl;
+    cout << "Библиотека содержит " << 3 << " примерные книги" << endl;
+
+    int choice;
+    do {
+        showMenu();
+        cin >> choice;
+
+        switch(choice) {
+            case 1: addBookInteractive(library); break;
+            case 2: removeBookInteractive(library); break;
+            case 3: searchByAuthorInteractive(library); break;
+            case 4: searchByTitleInteractive(library); break;
+            case 5: searchByYearInteractive(library); break;
+            case 6: borrowBookInteractive(library); break;
+            case 7: returnBookInteractive(library); break;
+            case 8: library.displayAllBooks(); break;
+            case 9: library.displayAvailableBooks(); break;
+            case 10: library.displayStatistics(); break;
+            case 0: cout << "Выход из программы..." << endl; break;
+            default: cout << "Неверный выбор! Попробуйте снова." << endl;
+        }
+
+    } while (choice != 0);
+
+    return 0;
+}

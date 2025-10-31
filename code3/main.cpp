@@ -236,6 +236,21 @@ public:
         cout << "Учебников: " << textbookCount << endl;
     }
 };
+void showMenu() {
+    cout << "\n=== МЕНЮ УМНОЙ БИБЛИОТЕКИ ===" << endl;
+    cout << "1. Добавить книгу" << endl;
+    cout << "2. Удалить книгу" << endl;
+    cout << "3. Найти книги по автору" << endl;
+    cout << "4. Найти книги по названию" << endl;
+    cout << "5. Найти книги по году" << endl;
+    cout << "6. Выдать книгу" << endl;
+    cout << "7. Вернуть книгу" << endl;
+    cout << "8. Показать все книги" << endl;
+    cout << "9. Показать доступные книги" << endl;
+    cout << "10. Показать статистику" << endl;
+    cout << "0. Выход" << endl;
+    cout << "Выберите действие: ";
+}
 void addBookInteractive(Library& library) {
     cout << "\n=== ДОБАВЛЕНИЕ НОВОЙ КНИГИ ===" << endl;
 

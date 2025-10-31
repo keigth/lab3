@@ -338,3 +338,9 @@ void borrowBookInteractive(Library& library) {
     cin >> isbn;
     library.borrowBook(isbn);
 }
+void returnBookInteractive(Library& library) {
+    string isbn;
+    cout << "¬ведите ISBN книги дл€ возврата: ";
+    cin >> isbn;
+    library.returnBook(isbn);
+}

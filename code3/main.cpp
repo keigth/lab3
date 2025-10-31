@@ -58,3 +58,43 @@ public:
         return "Художественная литература";
     }
 };
+// Научная литература
+class ScienceBook : public Book {
+private:
+    string subject;
+
+public:
+    ScienceBook(string t, string a, int y, string i, string s)
+        : Book(t, a, y, i), subject(s) {}
+
+    void displayInfo() const override {
+        cout << "=== НАУЧНАЯ ЛИТЕРАТУРА ===" << endl;
+        Book::displayInfo();
+        cout << "Область науки: " << subject << endl;
+        cout << "--------------------------------" << endl;
+    }
+
+    string getType() const override {
+        return "Научная литература";
+    }
+};
+// Учебник
+class Textbook : public Book {
+private:
+    string gradeLevel;
+
+public:
+    Textbook(string t, string a, int y, string i, string gl)
+        : Book(t, a, y, i), gradeLevel(gl) {}
+
+    void displayInfo() const override {
+        cout << "=== УЧЕБНИК ===" << endl;
+        Book::displayInfo();
+        cout << "Для: " << gradeLevel << endl;
+        cout << "--------------------------------" << endl;
+    }
+
+    string getType() const override {
+        return "Учебник";
+    }
+};

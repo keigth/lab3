@@ -236,3 +236,66 @@ public:
         cout << "Учебников: " << textbookCount << endl;
     }
 };
+void addBookInteractive(Library& library) {
+    cout << "\n=== ДОБАВЛЕНИЕ НОВОЙ КНИГИ ===" << endl;
+
+    string title, author, isbn, extra;
+    int year, type;
+
+    cout << "Введите название: ";
+    cin.ignore();
+    getline(cin, title);
+
+    cout << "Введите автора: ";
+    getline(cin, author);
+
+    cout << "Введите год: ";
+    cin >> year;
+
+    cout << "Введите ISBN: ";
+    cin >> isbn;
+
+    cout << "Выберите тип книги:" << endl;
+    cout << "1. Художественная литература" << endl;
+    cout << "2. Научная литература" << endl;
+    cout << "3. Учебник" << endl;
+    cout << "Ваш выбор: ";
+    cin >> type;
+
+    cin.ignore();
+    switch(type) {
+        case 1:
+            cout << "Введите жанр: ";
+            getline(cin, extra);
+            library.addBook(new FictionBook(title, author, year, isbn, extra));
+            break;
+        case 2:
+            cout << "Введите область науки: ";
+            getline(cin, extra);
+            library.addBook(new ScienceBook(title, author, year, isbn, extra));
+            break;
+        case 3:
+            cout << "Введите для кого предназначен (например, '10 класс'): ";
+            getline(cin, extra);
+            library.addBook(new Textbook(title, author, year, isbn, extra));
+            break;
+        default:
+            cout << "Неверный выбор типа книги!" << endl;
+    }
+}
+void searchByAuthorInteractive(Library& library) {
+    string author;
+    cout << "Введите автора для поиска: ";
+    cin.ignore();
+    getline(cin, author);
+
+    auto results = library.findBooksByAuthor(author);
+    if (results.empty()) {
+        cout << "Книги автора '" << author << "' не найдены!" << endl;
+    } else {
+        cout << "Найдено " << results.size() << " книг:" << endl;
+        for (auto book : results) {
+            book->displayInfo();
+        }
+    }
+}

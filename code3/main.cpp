@@ -331,3 +331,10 @@ void searchByYearInteractive(Library& library) {
         }
     }
 }
+
+void borrowBookInteractive(Library& library) {
+    string isbn;
+    cout << "¬ведите ISBN книги дл€ выдачи: ";
+    cin >> isbn;
+    library.borrowBook(isbn);
+}

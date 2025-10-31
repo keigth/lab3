@@ -1,0 +1,126 @@
+Словесно-формульный алгоритм программы "Умная домашняя библиотека"
+
+Процедуры и функции:
+
+Процедура addBookInteractive(Library& library):
+	a. Ввод названия книги (getline(cin, title))
+	b. Ввод автора книги (getline(cin, author))  
+	c. Ввод года издания (cin >> year)
+	d. Ввод ISBN (cin >> isbn)
+	e. Выбор типа книги (cin >> type)
+	f. Если type = 1, то:
+   		f1. Ввод жанра (getline(cin, extra))
+   		f2. Создание FictionBook
+   		f3. Вызов library.addBook()
+	g. Если type = 2, то:
+   		g1. Ввод области науки (getline(cin, extra))
+  		g2. Создание ScienceBook  
+   		g3. Вызов library.addBook()
+	h. Если type = 3, то:
+   		h1. Ввод целевой аудитории (getline(cin, extra))
+   		h2. Создание Textbook
+   		h3. Вызов library.addBook()
+	i. Иначе вывод "Неверный выбор типа книги!"
+
+Процедура searchByAuthorInteractive(Library& library):
+	a. Ввод автора для поиска (getline(cin, author))
+	b. Вызов results = library.findBooksByAuthor(author)
+	c. Если results.empty() = true, то вывод "Книги не найдены"
+	d. Иначе:
+   		d1. Вывод количества найденных книг
+   		d2. Для каждой книги в results вызов book->displayInfo()
+
+Процедура searchByTitleInteractive(Library& library):
+	a. Ввод названия для поиска (getline(cin, title))  
+	b. Вызов results = library.findBooksByTitle(title)
+	c. Если results.empty() = true, то вывод "Книги не найдены"
+	d. Иначе:
+   		d1. Вывод количества найденных книг
+   		d2. Для каждой книги в results вызов book->displayInfo()
+
+Процедура searchByYearInteractive(Library& library):
+	a. Ввод года для поиска (cin >> year)
+	b. Вызов results = library.findBooksByYear(year)
+	c. Если results.empty() = true, то вывод "Книги не найдены"  
+	d. Иначе:
+   		d1. Вывод количества найденных книг
+   		d2. Для каждой книги в results вызов book->displayInfo()
+
+Процедура borrowBookInteractive(Library& library):
+	a. Ввод ISBN книги (cin >> isbn)
+	b. Вызов library.borrowBook(isbn)
+
+Процедура returnBookInteractive(Library& library):
+	a. Ввод ISBN книги (cin >> isbn)  
+	b. Вызов library.returnBook(isbn)
+
+Процедура removeBookInteractive(Library& library):
+	a. Ввод ISBN книги (cin >> isbn)
+	b. Вызов library.removeBook(isbn)
+
+Основной алгоритм:
+
+1. Начало
+2. Установка русской локали (system("chcp 1251"))
+3. Создание объекта библиотеки (Library library)
+4. Добавление примерных книг в библиотеку:
+   - FictionBook("1984", "Джордж Оруэлл", 1949, "12345", "Антиутопия")
+   - ScienceBook("Краткая история времени", "Стивен Хокинг", 1988, "12347", "Физика") 
+   - Textbook("Алгебра", "Иванов А.А.", 2020, "12349", "10 класс")
+5. Вывод приветственного сообщения
+6. Цикл выполнения:
+   6.1. Вызов showMenu()
+   6.2. Ввод выбора пользователя (cin >> choice)
+   6.3. Если choice = 1, то вызов addBookInteractive(library)
+   6.4. Если choice = 2, то вызов removeBookInteractive(library)
+   6.5. Если choice = 3, то вызов searchByAuthorInteractive(library)
+   6.6. Если choice = 4, то вызов searchByTitleInteractive(library)
+   6.7. Если choice = 5, то вызов searchByYearInteractive(library)
+   6.8. Если choice = 6, то вызов borrowBookInteractive(library)
+   6.9. Если choice = 7, то вызов returnBookInteractive(library)
+   6.10. Если choice = 8, то вызов library.displayAllBooks()
+   6.11. Если choice = 9, то вызов library.displayAvailableBooks()
+   6.12. Если choice = 10, то вызов library.displayStatistics()
+   6.13. Если choice = 0, то вывод "Выход из программы..." и выход из цикла
+   6.14. Иначе, вывод "Неверный выбор! Попробуйте снова."
+7. Пока choice ≠ 0, переход к шагу 6.1
+8. Конец
+
+Интерактивные ф-ции:
+
+Метод addBook(Book* book):
+	a. Добавление книги в вектор (books.push_back(book))
+	b. Вывод "Книга добавлена в библиотеку!"
+
+Метод removeBook(string isbn):
+	a. Поиск книги по ISBN в векторе books
+	b. Если книга найдена, то:
+   		b1. Удаление книги из памяти (delete book)
+   		b2. Удаление из вектора (books.erase(it))
+   		b3. Вывод "Книга удалена из библиотеки!"
+	c. Иначе вывод "Книга с ISBN не найдена!"
+
+Метод borrowBook(string isbn):
+	a. Поиск книги по ISBN в векторе books  
+	b. Если книга найдена, то:
+   		b1. Если книга доступна, то:
+      			 - Установка статуса "выдана" (setAvailability(false))
+      			 - Вывод "Книга выдана!"
+   		b2. Иначе вывод "Книга уже выдана!"
+	c. Иначе вывод "Книга не найдена!"
+
+Метод returnBook(string isbn):
+	a. Поиск книги по ISBN в векторе books
+	b. Если книга найдена, то:
+  		b1. Если книга выдана, то:
+       			- Установка статуса "доступна" (setAvailability(true))
+       			- Вывод "Книга возвращена!"
+   		b2. Иначе вывод "Книга уже в библиотеке!"
+	c. Иначе вывод "Книга не найдена!"
+
+Метод displayStatistics():
+	a. Вывод общего количества книг (books.size())
+	b. Расчет доступных книг (подсчет isAvailable = true)
+	c. Расчет выданных книг (общее - доступные)
+	d. Подсчет книг по типам через getType()
+	e. Вывод статистики

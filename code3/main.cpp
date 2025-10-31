@@ -38,3 +38,23 @@ public:
     bool getAvailability() const { return isAvailable; }
     void setAvailability(bool available) { isAvailable = available; }
 };
+// Художественная литература
+class FictionBook : public Book {
+private:
+    string genre;
+
+public:
+    FictionBook(string t, string a, int y, string i, string g)
+        : Book(t, a, y, i), genre(g) {}
+
+    void displayInfo() const override {
+        cout << "=== ХУДОЖЕСТВЕННАЯ ЛИТЕРАТУРА ===" << endl;
+        Book::displayInfo();
+        cout << "Жанр: " << genre << endl;
+        cout << "--------------------------------" << endl;
+    }
+
+    string getType() const override {
+        return "Художественная литература";
+    }
+};
